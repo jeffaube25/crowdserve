@@ -1,48 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.pageContainer}>
-      <View style={styles.flexContainer}>
+      <StatusBar style="auto"/>
+      <Text style={styles.title}>CrowdServe</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+
         <View style={styles.tile}>
           <Text style={styles.text}>Crossroads</Text>
         </View>
+
         <View style={styles.tile}>
           <Text style={styles.text}>Gracie's</Text>
         </View>
-        <StatusBar style="auto" />
-      </View>
 
-      <View style={styles.flexContainer}>
         <View style={styles.tile}>
           <Text style={styles.text}>Campus Center</Text>
         </View>
+
         <View style={styles.tile}>
           <Text style={styles.text}>Global Village</Text>
         </View>
-      </View>
+
+        <View style={styles.tile}>
+          <Text style={styles.text}>Global Village</Text>
+        </View>
+
+        <View style={styles.tile}>
+          <Text style={styles.text}>Global Village</Text>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   pageContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 80,
   },
-  flexContainer: {
+  title: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    paddingLeft: 15,
+    paddingBottom: 10
+  },
+  scrollContainer: {
     display: 'flex',
     flexDirection: 'row',
-    flex: 1,
+    flexWrap: 'wrap',
+    gap: 15,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 15,
+    paddingBottom: 100
   },
   tile: {
     backgroundColor: '#808080',
