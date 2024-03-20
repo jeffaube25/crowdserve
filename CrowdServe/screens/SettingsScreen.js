@@ -5,7 +5,7 @@ const SettingsScreen = ({ navigation }) => {
     return (
         <View style={styles.pageContainer}>
             <StatusBar style="auto" />
-            <Text style={styles.title}>Campus Map</Text>
+            <Text style={styles.title}>Settings</Text>
         </View>
     );
 }
