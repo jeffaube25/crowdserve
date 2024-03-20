@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.pageContainer}>
-      <StatusBar style="auto"/>
+      <StatusBar style="auto" />
       <Text style={styles.title}>CrowdServe</Text>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
 
@@ -25,11 +25,11 @@ export default function App() {
         </View>
 
         <View style={styles.tile}>
-          <Text style={styles.text}>Global Village</Text>
+          <Text style={styles.text}>Academic Buildings</Text>
         </View>
 
         <View style={styles.tile}>
-          <Text style={styles.text}>Global Village</Text>
+          <Text style={styles.text}>Dorms</Text>
         </View>
       </ScrollView>
     </View>
