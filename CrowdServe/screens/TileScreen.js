@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 15,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 100
@@ -64,10 +64,18 @@ const styles = StyleSheet.create({
         height: 350,
         borderRadius: '10%',
         padding: 10,
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 5,
+            height: 10,
+        },
+        shadowOpacity: .25,
+        shadowRadius: 3.5,
+        elevation: 5
     },
     text: {
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold'
-    }
+    },
 });
