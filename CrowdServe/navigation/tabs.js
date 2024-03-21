@@ -23,12 +23,12 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? '#e32f45' : '#748c94'
+                                tintColor: focused ? 'darkorange' : '#748c94'
                             }}
                         />
                         <Text
                         style={{
-                            color: focused ? '#e32f45' : '#748c94'
+                            color: focused ? 'darkorange' : '#748c94'
                         }}>Map</Text>
                     </View>
                 )
@@ -42,12 +42,12 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? '#e32f45' : '#748c94'
+                                tintColor: focused ? 'darkorange' : '#748c94'
                             }}
                         />
                         <Text
                         style={{
-                            color: focused ? '#e32f45' : '#748c94'
+                            color: focused ? 'darkorange' : '#748c94'
                         }}>Restaurants</Text>
                     </View>
                 )
@@ -61,12 +61,12 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? '#e32f45' : '#748c94'
+                                tintColor: focused ? 'darkorange' : '#748c94'
                             }}
                         />
                         <Text
                         style={{
-                            color: focused ? '#e32f45' : '#748c94'
+                            color: focused ? 'darkorange' : '#748c94'
                         }}>Settings</Text>
                     </View>
                 )

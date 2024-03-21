@@ -8,12 +8,12 @@ const TileScreen = ({ navigation }) => {
             <StatusBar style="auto" />
             <Text style={styles.title}>CrowdServe</Text>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Tile title='Crossroads' progress={.7}/>
-                <Tile title="Gracie's" progress={.7}/>
-                <Tile title='Campus Center' progress={.7}/>
-                <Tile title='Global Village' progress={.7}/>
-                <Tile title='Academic Buildings' progress={.7}/>
-                <Tile title='Dorms' progress={.7}/>
+                <Tile title='Crossroads' progressLevel={.7} busyness={"Busy"}/>
+                <Tile title="Gracie's" progressLevel={.25} busyness={"Low"}/>
+                <Tile title='Campus Center' progressLevel={.7}/>
+                <Tile title='Global Village' progressLevel={.7}/>
+                <Tile title='Academic Buildings' progressLevel={.7}/>
+                <Tile title='Dorms' progressLevel={.7}/>
             </ScrollView>
         </View>
     );
@@ -29,14 +29,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 30,
         paddingLeft: 15,
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     scrollContainer: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 15,
-        // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 75
