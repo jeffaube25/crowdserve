@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import Tile from '../navigation/tile';
 
 const TileScreen = ({ navigation }) => {
     return (
@@ -7,30 +8,12 @@ const TileScreen = ({ navigation }) => {
             <StatusBar style="auto" />
             <Text style={styles.title}>CrowdServe</Text>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Crossroads</Text>
-                </View>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Gracie's</Text>
-                </View>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Campus Center</Text>
-                </View>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Global Village</Text>
-                </View>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Academic Buildings</Text>
-                </View>
-
-                <View style={styles.tile}>
-                    <Text style={styles.text}>Dorms</Text>
-                </View>
+                <Tile title='Crossroads' progress={.7}/>
+                <Tile title="Gracie's" progress={.7}/>
+                <Tile title='Campus Center' progress={.7}/>
+                <Tile title='Global Village' progress={.7}/>
+                <Tile title='Academic Buildings' progress={.7}/>
+                <Tile title='Dorms' progress={.7}/>
             </ScrollView>
         </View>
     );
@@ -56,22 +39,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingBottom: 100
-    },
-    tile: {
-        backgroundColor: '#808080',
-        width: 175,
-        height: 350,
-        borderRadius: '10%',
-        padding: 10,
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 5,
-            height: 10,
-        },
-        shadowOpacity: .25,
-        shadowRadius: 3.5,
-        elevation: 5
+        paddingBottom: 75
     },
     text: {
         color: 'white',

@@ -48,7 +48,7 @@ const Tabs = () => {
                         <Text
                         style={{
                             color: focused ? '#e32f45' : '#748c94'
-                        }}>List</Text>
+                        }}>Restaurants</Text>
                     </View>
                 )
             }}/>
