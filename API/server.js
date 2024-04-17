@@ -21,7 +21,14 @@ app.get('/occupancies', async (req, res) => {
         Authorization: `Bearer pat2Z7WeymxD1iAga.72971a130904a82df87a588763bdf032256d0a906b5d38aa9f1baa665b1e6710`,
       },
     });
+
+    const occupancies = response.data.records.map((record) => ({
+      restaurantID: record.fields['dining hall_id'],
+      progressLevel: record.fields['normalized_occupancy'],
+    }));
+
     res.json(response.data);
+    // res.json(occupancies);
   } catch (error) {
     console.error('Error fetching data from Occupancies table:', error);
     res.status(500).json({ error: 'Internal server error' });
