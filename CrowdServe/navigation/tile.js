@@ -4,9 +4,9 @@ import Modal from 'react-native-modal';
 
 
 const busynessRanges = {
-    low: { max: 0.25, text: "Low", color: "#5ebd78" },
+    low: { max: 0.3, text: "Low", color: "#5ebd78" },
     moderate: { max: 0.5, text: "Moderate", color: "#71A2DD" },
-    busy: { max: 0.75, text: "Busy", color: "darkorange" },
+    busy: { max: 0.70, text: "Busy", color: "darkorange" },
     "very busy": { max: 1, text: "Very Busy", color: "#f74343" },
 };
 
@@ -35,7 +35,7 @@ export default function Tile({ title, progressLevel, restaurants }) {
     };
 
     const getBusynessPercentage = () => {
-        const busynessPercentage = (progressLevel * 100) + "%"; // Round to one decimal place
+        const busynessPercentage = Math.ceil(progressLevel * 100) + "%"; // Round to one decimal place
         return busynessPercentage;
     };
 
@@ -56,52 +56,12 @@ export default function Tile({ title, progressLevel, restaurants }) {
                     <Text style={styles.restaurantName}>{restaurant.restaurantName}</Text>
                     <View style={styles.progressContainer}>
                         <Progress.Bar style={styles.progressBars} progress={restaurant.progressLevel} {...progressStyle} />
-                        <Text style={styles.busynessPercentage} >{(restaurant.progressLevel) * 100 + "%"}</Text>
+                        <Text style={styles.busynessPercentage} >{((restaurant.progressLevel) * 100).toFixed(0) + "%"}</Text>
                     </View>
                 </View>
             ))}
 
         </View>
-        // <View style={styles.tile}>
-        //     <Text style={styles.tileTitle}>{title}</Text>
-        //     <View style={styles.topProgressContainer}>
-        //         <Progress.Bar color={getBusynessColor()} style={styles.progressBar} progress={progressLevel} {...topProgressStyle} />
-        //         <Text>{getBusynessPercentage()}</Text>
-        //     </View>
-        //     <Text style={styles.progressText}>{getBusynessText()}</Text>
-        //     <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
-
-        //     <Text style={styles.restaurantName}>Asian Bar</Text>
-        //     <View style={styles.progressContainer}>
-        //         <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-        //         <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-        //     </View>
-
-        //     <Text style={styles.restaurantName}>Grill</Text>
-        //     <View style={styles.progressContainer}>
-        //         <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-        //         <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-        //     </View>
-
-        //     <Text style={styles.restaurantName}>Visiting Chef</Text>
-        //     <View style={styles.progressContainer}>
-        //         <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-        //         <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-        //     </View>
-
-        //     <Text style={styles.restaurantName}>Asian Bar</Text>
-        //     <View style={styles.progressContainer}>
-        //         <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-        //         <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-        //     </View>
-
-        //     <Text style={styles.restaurantName}>Asian Bar</Text>
-        //     <View style={styles.progressContainer}>
-        //         <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-        //         <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-        //     </View>
-
-        // </View>
     );
 }
 

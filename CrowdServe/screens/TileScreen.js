@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import Tile from '../navigation/tile';
 import Modal from 'react-native-modal';
 import { useState } from 'react';
@@ -12,7 +12,6 @@ const TileScreen = ({ navigation }) => {
     const [selectedTileData, setSelectedTileData] = useState(null);
 
     const toggleModal = (title) => {
-        // console.log("modal toggled");
         setIsModalVisible(!isModalVisible);
         setSelectedTileData(title); // Store clicked tile title (temporary data)
     };
@@ -23,12 +22,12 @@ const TileScreen = ({ navigation }) => {
             diningHallName: "Campus Center",
             restaurants: [
                 {
-                    restaurantId: 1, // Unique identifier for the restaurant within the dining hall
+                    restaurantID: 1, // Unique identifier for the restaurant within the dining hall
                     restaurantName: "Nathan's",
                     progressLevel: 0.75, // Progress level (0 to 1)
                 },
                 {
-                    restaurantId: 2,
+                    restaurantID: 2,
                     restaurantName: "Ritz",
                     progressLevel: 0.83,
                 },
@@ -59,12 +58,12 @@ const TileScreen = ({ navigation }) => {
             diningHallName: "Dormside",
             restaurants: [
                 {
-                    restaurantId: 7, // Unique identifier for the restaurant within the dining hall
+                    restaurantID: 7, // Unique identifier for the restaurant within the dining hall
                     restaurantName: "Beanz",
                     progressLevel: 0.75, // Progress level (0 to 1)
                 },
                 {
-                    restaurantId: 8,
+                    restaurantID: 8,
                     restaurantName: "Gracie's",
                     progressLevel: 0.2,
                 },
@@ -95,29 +94,29 @@ const TileScreen = ({ navigation }) => {
                     progressLevel: .65,
                 },
                 {
-                    restaurantId: 16, // Unique identifier for the restaurant within the dining hall
+                    restaurantID: 16, // Unique identifier for the restaurant within the dining hall
                     restaurantName: "Asian Bar",
-                    progressLevel: 0.75, // Progress level (0 to 1)
+                    progressLevel: 0.83, // Progress level (0 to 1)
                 },
                 {
-                    restaurantId: 17,
+                    restaurantID: 17,
                     restaurantName: "Grill",
-                    progressLevel: 0.73,
+                    progressLevel: 0.88,
                 },
                 {
                     restaurantID: 18,
                     restaurantName: "Visiting Chef",
-                    progressLevel: .52,
+                    progressLevel: .72,
                 },
                 {
                     restaurantID: 19,
                     restaurantName: "Main Entree",
-                    progressLevel: .24,
+                    progressLevel: .93,
                 },
                 {
                     restaurantID: 20,
                     restaurantName: "Subs",
-                    progressLevel: .66,
+                    progressLevel: .69,
                 },
             ],
         },
@@ -131,7 +130,7 @@ const TileScreen = ({ navigation }) => {
                     progressLevel: .13,
                 },
                 {
-                    restaurantId: 15,
+                    restaurantID: 15,
                     restaurantName: "GV Cantina",
                     progressLevel: .34,
                 }
@@ -139,50 +138,48 @@ const TileScreen = ({ navigation }) => {
         }
     ];
 
-    const [occupancyData, setOccupancyData] = useState([]);
+    const [occupancyData, setOccupancyData] = useState(null); // Initialize as null
+    const [isLoading, setIsLoading] = useState(true);
+    const [updatedRestaurantData, setUpdatedRestaurantData] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:3000/occupancies');
+                const response = await fetch('http://localhost:3000/finaltable');
+
+                if (!response.ok) { // Check for HTTP status errors
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
                 const data = await response.json();
-                setOccupancyData(data.records); // Access the records array directly
+                console.log("API Response:", data);
+                setOccupancyData(data); // Access the records array (adjust if necessary)
             } catch (error) {
                 console.error('Error fetching occupancy data:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
-
         fetchData();
     }, []);
 
-    // const mergedData = occupancyData.map((occupancy) => {
-    //     const matchingRestaurant = restaurantData.find(
-    //         (restaurant) => restaurant.diningHallId === occupancy.diningHallId
-    //     );
-    //     if (matchingRestaurant) {
-    //         return { ...matchingRestaurant, progressLevel: occupancy.progressLevel };
-    //     }
-    //     return null; // Handle cases where diningHallId doesn't match
-    // });
-
-    const processedOccupancyData = occupancyData.map((occupancy) => ({
-        restaurantID: occupancy.fields['dining hall_id'],  // Assuming this is the restaurantID in the API response
-        progressLevel: occupancy.fields['normalized_occupancy'],
-    }));
-
-    const mergedData = restaurantData.map((restaurant) => {
-        const occupancy = processedOccupancyData.find(
-            (occ) => occ.restaurantID === restaurant.restaurantId  // Matching with restaurantId
-        );
-        return {
-            ...restaurant,
-            progressLevel: occupancy ? occupancy.progressLevel : 0, // Default to 0 if no match
-        };
-    });
-
-    console.log(mergedData);
-
-    const filteredMergedData = mergedData.filter((data) => data !== null);
+    useEffect(() => {
+        if (occupancyData) {
+            const updatedData = restaurantData.map((diningHall) => {
+                const updatedRestaurants = diningHall.restaurants.map((restaurant) => {
+                    const matchingOccupancy = occupancyData.find(
+                        (occ) => occ.restaurantID === restaurant.restaurantID
+                    );
+                    return {
+                        ...restaurant,
+                        progressLevel: matchingOccupancy ? matchingOccupancy.progressLevel : restaurant.progressLevel,
+                    };
+                });
+                return { ...diningHall, restaurants: updatedRestaurants };
+            });
+            setUpdatedRestaurantData(updatedData);
+        }
+    }, [occupancyData]);
 
     function calculateOverallBusyness(restaurants) {
         const totalBusyness = restaurants.reduce((acc, curr) => acc + curr.progressLevel, 0);
@@ -200,41 +197,23 @@ const TileScreen = ({ navigation }) => {
             <Text style={styles.title}>CrowdServe</Text>
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {mergedData.map((diningHall) => (
-                    <TouchableOpacity
-                        key={diningHall.diningHallId}
-                        style={styles.touchableOpacity}
-                        onPress={() => toggleModal(diningHall.diningHallName)}
-                    >
-                        <Tile
-                            title={diningHall.diningHallName}
-                            progressLevel={calculateOverallBusyness(diningHall.restaurants)}
-                            restaurants={diningHall.restaurants}
-                        />
-                    </TouchableOpacity>
-                ))}
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0000ff" /> // Loading indicator
+                ) : (
+                    updatedRestaurantData.map((diningHall) => (
+                        <TouchableOpacity
+                            key={diningHall.diningHallId}
+                            style={styles.touchableOpacity}
+                            onPress={() => toggleModal(diningHall.diningHallName)}
+                        >
+                            <Tile
+                                title={diningHall.diningHallName}
+                                progressLevel={calculateOverallBusyness(diningHall.restaurants)}
+                                restaurants={diningHall.restaurants}
+                            />
+                        </TouchableOpacity>
+                    )))}
             </ScrollView>
-
-            {/* <TouchableOpacity style={styles.touchableOpacity} onPress={() => toggleModal("Gracies")}>
-                    <Tile title="Gracie's" progressLevel={.23} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.touchableOpacity} onPress={() => toggleModal('Campus Center')}>
-                    <Tile title='Campus Center' progressLevel={.69} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.touchableOpacity} onPress={() => toggleModal('Global Village')}>
-                    <Tile title='Global Village' progressLevel={.82} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.touchableOpacity} onPress={() => toggleModal('Dorms')}>
-                    <Tile title='Dorms' progressLevel={.4} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.touchableOpacity} onPress={() => toggleModal('Academic Side')}>
-                    <Tile title='Academic' progressLevel={.25} />
-                </TouchableOpacity> */
-            /* </ScrollView> */}
 
             <Modal onBackdropPress={this.toggleModal} isVisible={isModalVisible}>
                 <View style={styles.modalContainer}>
