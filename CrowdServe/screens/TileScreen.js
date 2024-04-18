@@ -204,7 +204,7 @@ const TileScreen = ({ navigation }) => {
                         <TouchableOpacity
                             key={diningHall.diningHallId}
                             style={styles.touchableOpacity}
-                            onPress={() => toggleModal(diningHall.diningHallName)}
+                            onPress={() => toggleModal(diningHall)}
                         >
                             <Tile
                                 title={diningHall.diningHallName}
@@ -215,15 +215,20 @@ const TileScreen = ({ navigation }) => {
                     )))}
             </ScrollView>
 
-            <Modal onBackdropPress={this.toggleModal} isVisible={isModalVisible}>
+            <Modal onBackdropPress={toggleModal} isVisible={isModalVisible}>
                 <View style={styles.modalContainer}>
                     <Text style={styles.modalTitle}>{selectedTileData ? `${selectedTileData}` : 'No tile selected yet'}</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
                         <Text style={{ fontSize: 25, fontWeight: "bold", color: "red" }}>X</Text>
                     </TouchableOpacity>
                     <View style={{ top: 100, height: "100%", width: "100%" }}>
-                        <ScrollView contentContainertyle={styles.modalScrollContainer}>
-                            <ModalContent restaurantID={0}></ModalContent>
+                        <ScrollView contentContainerStyle={styles.modalScrollContainer}>
+                            {selectedTileData && ( // Render only if data is available
+                                <ModalContent
+                                    diningHallName={selectedTileData.diningHallName}
+                                    restaurants={selectedTileData.restaurants}
+                                />
+                            )}
                         </ScrollView>
                     </View>
                 </View>

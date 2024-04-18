@@ -19,7 +19,6 @@ export default function Tile({ title, progressLevel, restaurants }) {
                 return busynessRanges[key].text;
             }
         }
-
         return "Unknown";
     };
 

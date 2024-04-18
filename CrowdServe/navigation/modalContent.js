@@ -10,7 +10,88 @@ const busynessRanges = {
     "very busy": { max: 1, text: "Very Busy", color: "#f74343" },
 };
 
-export default function ModalContent({ title, progressLevel, busyness, restaurantID }) {
+// export default function ModalContent({ title, progressLevel, busyness, restaurantID }) {
+//     const getBusynessText = () => {
+//         // Check for custom busyness prop first
+//         if (busyness) {
+//             return busyness;
+//         }
+
+//         // Find the busyness range based on progressLevel
+//         for (const key in busynessRanges) {
+//             if (progressLevel <= busynessRanges[key].max) {
+//                 return busynessRanges[key].text;
+//             }
+//         }
+
+//         return "Unknown";
+//     };
+
+//     const getBusynessColor = () => {
+//         // Check for custom busyness prop first
+//         if (busyness) {
+//             return busyness;
+//         }
+
+//         // Find the busyness range based on progressLevel
+//         for (const key in busynessRanges) {
+//             if (progressLevel <= busynessRanges[key].max) {
+//                 return busynessRanges[key].color;
+//             }
+//         }
+
+//         return "Unknown";
+//     };
+
+//     const getBusynessPercentage = () => {
+//         busynessPercentage = (progressLevel * 100 + "%");
+//         return busynessPercentage;
+//     };
+
+//     return (
+//         <View style={styles.tile}>
+//             <Text style={styles.tileTitle}>{title}</Text>
+//             <View style={styles.topProgressContainer}>
+//                 <Progress.Bar color={getBusynessColor()} style={styles.progressBar} progress={progressLevel} {...topProgressStyle} />
+//                 <Text>{getBusynessPercentage()}</Text>
+//             </View>
+//             <Text style={styles.progressText}>{getBusynessText()}</Text>
+//             <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
+
+//             <Text style={styles.restaurantName}>Asian Bar</Text>
+//             <View style={styles.progressContainer}>
+//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
+//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
+//             </View>
+
+//             <Text style={styles.restaurantName}>Grill</Text>
+//             <View style={styles.progressContainer}>
+//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
+//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
+//             </View>
+
+//             <Text style={styles.restaurantName}>Visiting Chef</Text>
+//             <View style={styles.progressContainer}>
+//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
+//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
+//             </View>
+
+//             <Text style={styles.restaurantName}>Asian Bar</Text>
+//             <View style={styles.progressContainer}>
+//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
+//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
+//             </View>
+
+//             <Text style={styles.restaurantName}>Asian Bar</Text>
+//             <View style={styles.progressContainer}>
+//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
+//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
+//             </View>
+//         </View>
+//     );
+// }
+
+export default function ModalContent({ diningHallName, restaurants }) {
     const getBusynessText = () => {
         // Check for custom busyness prop first
         if (busyness) {
@@ -49,45 +130,23 @@ export default function ModalContent({ title, progressLevel, busyness, restauran
     };
 
     return (
-        <View style={styles.tile}>
-            <Text style={styles.tileTitle}>{title}</Text>
-            <View style={styles.topProgressContainer}>
-                <Progress.Bar color={getBusynessColor()} style={styles.progressBar} progress={progressLevel} {...topProgressStyle} />
-                <Text>{getBusynessPercentage()}</Text>
-            </View>
-            <Text style={styles.progressText}>{getBusynessText()}</Text>
-            <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
-            
-            <Text style={styles.restaurantName}>Asian Bar</Text>
-            <View style={styles.progressContainer}>
-                <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-                <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-            </View>
-
-            <Text style={styles.restaurantName}>Grill</Text>
-            <View style={styles.progressContainer}>
-                <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-                <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-            </View>
-
-            <Text style={styles.restaurantName}>Visiting Chef</Text>
-            <View style={styles.progressContainer}>
-                <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-                <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-            </View>
-            
-            <Text style={styles.restaurantName}>Asian Bar</Text>
-            <View style={styles.progressContainer}>
-                <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-                <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-            </View>
-
-            <Text style={styles.restaurantName}>Asian Bar</Text>
-            <View style={styles.progressContainer}>
-                <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-                <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-            </View>
-            
+        <View style={styles.modalContent}>
+            <Text style={styles.diningHallTitle}>{diningHallName}</Text>
+            {restaurants.map((restaurant) => (
+                <View key={restaurant.restaurantID} style={styles.restaurantContainer}>
+                    <Text style={styles.restaurantName}>{restaurant.restaurantName}</Text>
+                    <View style={styles.progressContainer}>
+                        <Progress.Bar
+                            style={styles.progressBars}
+                            progress={restaurant.progressLevel}
+                            {...progressStyle}
+                        />
+                        <Text style={styles.busynessPercentage}>
+                            {Math.ceil(restaurant.progressLevel * 100)}%
+                        </Text>
+                    </View>
+                </View>
+            ))}
         </View>
     );
 }
