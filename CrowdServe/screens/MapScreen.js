@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 const MapScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedTileData, setSelectedTileData] = useState(null);
+  const [markerClickCount, setMarkerClickCount] = useState({});
 
   const restaurantData = [
     {
@@ -208,9 +209,7 @@ const MapScreen = ({ navigation }) => {
       },
       title: 'Crossroads',
       diningHallId: 3,
-      // progressLevel: getDiningHallBusyness(markers.diningHallId),
       progressLevel: .1,
-      description: 'hello',
     },
     {
       latlng: {
@@ -218,10 +217,8 @@ const MapScreen = ({ navigation }) => {
         longitude: -77.68073998528452,
       },
       title: 'Global Village',
-      diningHallId: 2,
-      // progressLevel: getDiningHallBusyness(markers.diningHallId),
+      diningHallId: 4,
       progressLevel: .1,
-      description: 'hello',
     },
     {
       latlng: {
@@ -230,9 +227,7 @@ const MapScreen = ({ navigation }) => {
       },
       title: 'Campus Center',
       diningHallId: 1,
-      // progressLevel: getDiningHallBusyness(markers.diningHallId),
       progressLevel: .1,
-      description: 'hello',
     },
     {
       latlng: {
@@ -240,18 +235,23 @@ const MapScreen = ({ navigation }) => {
         longitude: -77.6691954024676,
       },
       title: 'Dorms',
-      diningHallId: 4,
-      // progressLevel: getDiningHallBusyness(markers.diningHallId),
+      diningHallId: 2,
       progressLevel: .1,
-      description: 'hello',
     },
 
   ];
 
-  // const toggleModal = (diningHall) => {
-  //   setIsModalVisible(!isModalVisible);
-  //   setSelectedTileData(diningHall); 
-  // };
+  const handleMarkerPress = (marker) => {
+    setMarkerClickCount((prevCounts) => ({
+      ...prevCounts,
+      [marker.diningHallId]: (prevCounts[marker.diningHallId] || 0) + 1,
+    }));
+  
+    if (markerClickCount[marker.diningHallId] >= 1) {
+      toggleModal(marker);
+      setMarkerClickCount({}); // Reset click counts after opening modal
+    }
+  };
 
   const toggleModal = (marker) => {
     setIsModalVisible(!isModalVisible);
@@ -260,6 +260,7 @@ const MapScreen = ({ navigation }) => {
       (diningHall) => diningHall.diningHallId === marker.diningHallId
     );
     setSelectedTileData(selectedDiningHall); // Update state with dining hall data
+    setMarkerClickCount({});
   };
 
   return (
@@ -281,8 +282,8 @@ const MapScreen = ({ navigation }) => {
             key={index}
             coordinate={marker.latlng}
             title={marker.title}
-            description={marker.progressLevel.toString()}
-            onPress={() => toggleModal(marker)}
+            description={(getDiningHallBusyness(marker.diningHallId) * 100).toFixed(0) + "% Full"}
+            onPress={() => handleMarkerPress(marker)}
           />
         ))}
       </MapView>
