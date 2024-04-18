@@ -290,13 +290,14 @@ const styles = StyleSheet.create({
     },
     modalScrollContainer: {
         // display: 'flex',
-        // flexDirection: 'column',
-        // flexWrap: 'wrap',
-        // gap: 15,
+        // flexDirection: 'row',
+        // // flexWrap: 'wrap',
+        // // gap: 15,
         // alignItems: 'center',
         // justifyContent: 'center',
-        // paddingBottom: 75,
-        // height:"100%"
+        // // paddingBottom: 75,
+        // height:"100%",
+        // flex:1,
     },
     modalContent: {
 

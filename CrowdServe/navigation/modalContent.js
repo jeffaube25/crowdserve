@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import * as Progress from 'react-native-progress';
-import Modal from 'react-native-modal';
 
 
 const busynessRanges = {
@@ -9,87 +8,6 @@ const busynessRanges = {
     busy: { max: 0.70, text: "Busy", color: "darkorange", message: "Busy - Estimated wait time: 10-15 minutes" },
     "very busy": { max: 1, text: "Very Busy", color: "#f74343", message: "Very Busy - Estimated wait time: 15-20+ minutes" },
 };
-
-// export default function ModalContent({ title, progressLevel, busyness, restaurantID }) {
-//     const getBusynessText = () => {
-//         // Check for custom busyness prop first
-//         if (busyness) {
-//             return busyness;
-//         }
-
-//         // Find the busyness range based on progressLevel
-//         for (const key in busynessRanges) {
-//             if (progressLevel <= busynessRanges[key].max) {
-//                 return busynessRanges[key].text;
-//             }
-//         }
-
-//         return "Unknown";
-//     };
-
-//     const getBusynessColor = () => {
-//         // Check for custom busyness prop first
-//         if (busyness) {
-//             return busyness;
-//         }
-
-//         // Find the busyness range based on progressLevel
-//         for (const key in busynessRanges) {
-//             if (progressLevel <= busynessRanges[key].max) {
-//                 return busynessRanges[key].color;
-//             }
-//         }
-
-//         return "Unknown";
-//     };
-
-//     const getBusynessPercentage = () => {
-//         busynessPercentage = (progressLevel * 100 + "%");
-//         return busynessPercentage;
-//     };
-
-//     return (
-//         <View style={styles.tile}>
-//             <Text style={styles.tileTitle}>{title}</Text>
-//             <View style={styles.topProgressContainer}>
-//                 <Progress.Bar color={getBusynessColor()} style={styles.progressBar} progress={progressLevel} {...topProgressStyle} />
-//                 <Text>{getBusynessPercentage()}</Text>
-//             </View>
-//             <Text style={styles.progressText}>{getBusynessText()}</Text>
-//             <View style={{borderBottomColor: 'black', borderBottomWidth: StyleSheet.hairlineWidth,}}/>
-
-//             <Text style={styles.restaurantName}>Asian Bar</Text>
-//             <View style={styles.progressContainer}>
-//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-//             </View>
-
-//             <Text style={styles.restaurantName}>Grill</Text>
-//             <View style={styles.progressContainer}>
-//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-//             </View>
-
-//             <Text style={styles.restaurantName}>Visiting Chef</Text>
-//             <View style={styles.progressContainer}>
-//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-//             </View>
-
-//             <Text style={styles.restaurantName}>Asian Bar</Text>
-//             <View style={styles.progressContainer}>
-//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-//             </View>
-
-//             <Text style={styles.restaurantName}>Asian Bar</Text>
-//             <View style={styles.progressContainer}>
-//                 <Progress.Bar style={styles.progressBars} progress={progressLevel} {...progressStyle} />
-//                 <Text style={styles.busynessPercentage} >{getBusynessPercentage()}</Text>
-//             </View>
-//         </View>
-//     );
-// }
 
 export default function ModalContent({ diningHallName, restaurants }) {
     if (!Array.isArray(restaurants)) {
@@ -179,6 +97,7 @@ export default function ModalContent({ diningHallName, restaurants }) {
                     <Text style={styles.restaurantName}>{restaurant.restaurantName}</Text>
                     <View style={styles.progressContainer}>
                         <Progress.Bar
+                            color={getBusynessColor(restaurant.progressLevel)}
                             style={styles.progressBars}
                             progress={restaurant.progressLevel}
                             {...progressStyle}
@@ -199,6 +118,7 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingLeft: 20,
         paddingRight: 20,
+        maxHeight: 90,
     },
     tile: {
         backgroundColor: '#E7E7E7',
@@ -274,12 +194,13 @@ const styles = StyleSheet.create({
     restaurantBusynessText: {
         left:1,
         paddingTop:10,
+        paddingBottom:30,
     },
 });
 
 const topProgressStyle = {
     width: 250,
-    height: 26,
+    height: 30,
     borderRadius: 15,
     left: 20,
 }
@@ -290,8 +211,6 @@ const progressStyle = {
     height: 16,
     borderRadius: 15,
 }
-
-// const styles = StyleSheet.create({
 //     tile: {
 //         backgroundColor: '#E7E7E7',
 //         width: '100%',
