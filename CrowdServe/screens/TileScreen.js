@@ -161,7 +161,7 @@ const TileScreen = ({ navigation }) => {
                 }
 
                 const data = await response.json();
-                console.log("API Response:", data);
+                // console.log("API Response:", data);
                 setOccupancyData(data); // Access the records array (adjust if necessary)
             } catch (error) {
                 console.error('Error fetching occupancy data:', error);
