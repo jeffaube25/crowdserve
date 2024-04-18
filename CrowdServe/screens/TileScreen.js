@@ -132,6 +132,16 @@ const TileScreen = ({ navigation }) => {
                     restaurantID: 15,
                     restaurantName: "GV Cantina",
                     progressLevel: .34,
+                },
+                {
+                    restaurantID: 21,
+                    restaurantName: "Bar",
+                    progressLevel: .34,
+                },
+                {
+                    restaurantID: 22,
+                    restaurantName: "Rotating Menu",
+                    progressLevel: .54,
                 }
             ]
         }
@@ -197,7 +207,7 @@ const TileScreen = ({ navigation }) => {
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 {isLoading ? (
-                    <ActivityIndicator size="large" color="#0000ff" /> // Loading indicator
+                    <ActivityIndicator size="large" color="grey" /> // Loading indicator
                 ) : (
                     updatedRestaurantData.map((diningHall) => (
                         <TouchableOpacity
@@ -216,7 +226,7 @@ const TileScreen = ({ navigation }) => {
 
             <Modal onBackdropPress={toggleModal} isVisible={isModalVisible}>
                 <View style={styles.modalContainer}>
-                    <Text style={styles.modalTitle}>{selectedTileData ? `${selectedTileData}` : 'No tile selected yet'}</Text>
+                    <Text style={styles.modalTitle}>{selectedTileData ? selectedTileData.diningHallName : 'No tile selected yet'}</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
                         <Text style={{ fontSize: 25, fontWeight: "bold", color: "red" }}>X</Text>
                     </TouchableOpacity>
@@ -224,7 +234,6 @@ const TileScreen = ({ navigation }) => {
                         <ScrollView contentContainerStyle={styles.modalScrollContainer}>
                             {selectedTileData && ( // Render only if data is available
                                 <ModalContent
-                                    diningHallName={selectedTileData.diningHallName}
                                     restaurants={selectedTileData.restaurants}
                                 />
                             )}
@@ -287,6 +296,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // justifyContent: 'center',
         // paddingBottom: 75,
+        // height:"100%"
     },
     modalContent: {
 

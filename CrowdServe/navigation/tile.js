@@ -51,7 +51,7 @@ export default function Tile({ title, progressLevel, restaurants }) {
 
             {/* Rendering Restaurants Dynamically */}
             {restaurants && restaurants.map((restaurant) => (
-                <View key={restaurant.restaurantId} style={styles.restaurantContainer}>
+                <View key={restaurant.restaurantID} style={styles.restaurantContainer}>
                     <Text style={styles.restaurantName}>{restaurant.restaurantName}</Text>
                     <View style={styles.progressContainer}>
                         <Progress.Bar style={styles.progressBars} progress={restaurant.progressLevel} {...progressStyle} />
