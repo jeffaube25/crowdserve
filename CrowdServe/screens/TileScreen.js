@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator
 import Tile from '../navigation/tile';
 import Modal from 'react-native-modal';
 import { useState } from 'react';
-import * as Progress from 'react-native-progress';
 import ModalContent from '../navigation/modalContent';
 import React, { useEffect } from 'react';
 
